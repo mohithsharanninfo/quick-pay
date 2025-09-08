@@ -267,6 +267,7 @@ function App() {
             Rate: 0,
             GoldWt: 0,
             noOfInst: 1,
+            GoldRate:0
           },
         ],
       };
