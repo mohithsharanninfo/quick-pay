@@ -7,7 +7,7 @@ import Mob from '../src/components/mobname'
 function App() {
   return (
     <div className="app">
-        <Link to="/status">Status</Link>
+        {/* <Link to="/status">Status</Link> */}
       <Routes>
     
         <Route exact path="/status" element={<Status />} />
