@@ -99,6 +99,14 @@ const Status = () => {
     };
   }, []);
 
+
+
+  // const refMatch = apiResponse?.match(/Payment Reference Number:\s*(\d+)/);
+  // const amountMatch = apiResponse?.match(/Amount\s*:\s*([\d,]+)/);
+
+  // const paymentRef = refMatch ? refMatch[1] : null;
+  // const amount = amountMatch ? amountMatch[1] : null;
+
   return (
     <div className='App'>
       <div className="header">
@@ -110,7 +118,7 @@ const Status = () => {
       </div>
       <div className="container-fluid d-flex justify-content-center align-items-center">
         {apiResponse && (
-          <div className="card" style={{ width: "25rem", backgroundColor: "lavender", padding: "30px", left: "0%",marginTop:"5%" }}>
+          <div className="card" style={{ width: "25rem", backgroundColor: "lavender", padding: "30px", left: "0%", marginTop: "5%" }}>
             <div className="card-body" style={{ alignItems: "center", fontSize: "25px" }}>
               <p className="card-text" style={{ alignItems: "center", fontSize: "22px" }}>{apiResponse}</p>
 
@@ -135,7 +143,7 @@ const Status = () => {
 
               )}
             </div>
-            <a href="https://www.bhimagold.com" target="_blank" rel="noopener noreferrer">
+            <a href="/" target="_blank" rel="noopener noreferrer">
               Go to Bhima Home
             </a>
           </div>
