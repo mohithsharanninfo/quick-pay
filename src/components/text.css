@@ -1,53 +1,53 @@
 body {
-    margin: 0; 
-    padding: 0; 
-    background-color:rgba(255, 240, 245, 0.26)!important; 
-    font-family: baskerville !important;
-  }
-  
-  .App {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 6%;
-    font-family: baskerville !important;
-  
-  }
-  
-  .card {
-    width: 90%;
-    border-style: ridge;
-    padding: 20px;
-    text-align: center;
-    flex-direction: column;
-    top: 40px;
-    right:5%;
-    border:1px
-    
-  }
-  
-  .profile-card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 25px;
-    padding: 25px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-right: 30%;
-    margin-top: 30px;
-  }
-  
-  .small-logo {
-    position: absolute; 
-    bottom: 66%; 
-    left: 23%; 
-    transform: translate(-50%, -50%); 
-    width: 40px;
-    height: auto; 
-    
-  }
-  
-  /* .card {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(255, 240, 245, 0.26) !important;
+  font-family: baskerville !important;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5%;
+  font-family: baskerville !important;
+  width: 100% !important;
+
+}
+
+.card {
+  width: 90%;
+  border-style: ridge;
+  padding: 20px;
+  text-align: center;
+  flex-direction: column;
+  top: 40px;
+  right: 5%;
+  border: 1px
+}
+
+.profile-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-right: 30%;
+  margin-top: 30px;
+}
+
+.small-logo {
+  position: absolute;
+  bottom: 66%;
+  left: 23%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: auto;
+
+}
+
+/* .card {
     width: 30%;
     border-style: ridge;
     padding: 70px;
@@ -55,161 +55,166 @@ body {
     margin-right: 30%;
    
   } */
-  
-  input[type="text"] {
+
+input[type="text"] {
+  width: 100%;
+  border: 2px solid aliceblue;
+  padding: 5px;
+  margin: 10px 0;
+  border-radius: 20px;
+  background-color: aliceblue;
+}
+
+a {
+  text-decoration: underline;
+  color: #007bff;
+
+}
+
+.text-right {
+  margin-left: 55%;
+}
+
+button {
+  margin-top: 10px;
+  color: white;
+  cursor: pointer;
+  width: 20%;
+  border-radius: 40px;
+}
+
+.logo {
+  max-width: 270px;
+  margin-left: -4px;
+  max-height: 160px;
+}
+
+.text-danger {
+  font-weight: bold;
+}
+
+.header {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 9999;
+  /* Adjust as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.background {
+  background: no-repeat center center fixed;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
+
+
+.container {
+  margin-top: 5px;
+  border-radius: 60px;
+
+
+}
+
+
+p {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+/* Media query for mobile view */
+@media (max-width: 768px) {
+  .profile-card {
     width: 100%;
-    border: 2px solid aliceblue;
-    padding: 5px;
-    margin: 10px 0;
-    border-radius: 20px;
-    background-color:aliceblue;
-  }
-  
-  a {
-    text-decoration: underline;
-    color: #007bff;
-   
-  }
-  
-  .text-right {
-    margin-left: 55%;
-  }
-  
-  button {
-    margin-top: 10px;
-    color: white;
-    cursor: pointer;
-    width: 20%;
-    border-radius: 40px;
-  }
-  
-  .logo {
-    max-width: 270px;
-    margin-left: -4px;
-    max-height: 160px;
-  }
-  
-  .text-danger {
-    font-weight: bold;
-  }
-  
-  .header {
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: white;
-    z-index: 9999; /* Adjust as needed */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .background {
-    background:  no-repeat center center fixed;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
-  }
-  
-  
-  .container {
-    margin-top: 5px;
-    border-radius: 60px;
-   
-    
-  }
-  
-  
-  p{
-    font-size: 15px;
-    font-weight: bold;
+    margin-right: 0;
+    margin-top: -15px;
+
   }
 
-  
-  
-  /* Media query for mobile view */
-  @media (max-width: 768px) {
-    .profile-card {
-      width: 100%;
-      margin-right: 0;
-      margin-top: -15px;
-      
-    }
-    .card {
-      left:5%;
-      margin-top: -0px;
-    }
-    .small-logo {
-      position: absolute; 
-      bottom: 86%; 
-      left: 48%; 
-      transform: translate(-50%, -50%); 
-      width: 40px; 
-      height: auto; 
-      
-    }
-  
-    button {
-      width: 30%; 
-      margin-left: 0%;
-      margin-top: 40px;
-   
-    }
-    .logo {
-      width: 50%;
-      height: auto; 
-      margin-right: 40%;
-    }
-    .App {
-      margin-top: 20%;
-    }
-    .text-right {
-    align-items: center; 
+  .card {
+    left: 5%;
+    margin-top: -0px;
+  }
+
+  .small-logo {
+    position: absolute;
+    bottom: 86%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: auto;
+
+  }
+
+  button {
+    width: 30%;
+    margin-left: 0%;
+    margin-top: 40px;
+
+  }
+
+  .logo {
+    width: 50%;
+    height: auto;
+    margin-right: 40%;
+  }
+
+
+
+  .text-right {
+    align-items: center;
     justify-content: center;
     margin-left: 40%;
     margin-bottom: 10px;
-  
-    }
- 
+
   }
-  /* This CSS should hide the "Terms & Conditions" section by default */
-  
-  
-  /* Add a media query to show the "Terms & Conditions" section for mobile view */
-  @media (max-width: 768px) {
-    .terms {
-      display: block;
-    }
-   
+
+}
+
+/* This CSS should hide the "Terms & Conditions" section by default */
+
+
+/* Add a media query to show the "Terms & Conditions" section for mobile view */
+@media (max-width: 768px) {
+  .terms {
+    display: block;
   }
-  /* styles.css or your preferred stylesheet */
-  
-  /* Customize toast appearance */
-  
-  
-  /* Customize the position of the toast container */
+
+}
+
+/* styles.css or your preferred stylesheet */
+
+/* Customize toast appearance */
+
+
+/* Customize the position of the toast container */
+.Toastify__toast-container {
+  position: fixed;
+  margin-top: 6%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  /* Make sure it's above other elements */
+}
+
+.Toastify__toast-body::before {
+  display: none;
+}
+
+
+/* Mobile styles */
+@media (max-width: 767px) {
   .Toastify__toast-container {
+    margin-top: -20px;
     position: fixed;
-    margin-top: 6%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-    z-index: 9999; /* Make sure it's above other elements */
+
+    z-index: 9999;
+    /* Make sure it's above other elements */
   }
-  .Toastify__toast-body::before {
-    display: none; 
-  }
-  
-  
-  /* Mobile styles */
-  @media (max-width: 767px) {
-    .Toastify__toast-container {
-      margin-top: -20px;
-      position: fixed;
-      
-      z-index: 9999; /* Make sure it's above other elements */
-    }
-    
-  }
-  
-  
-  
+
+}

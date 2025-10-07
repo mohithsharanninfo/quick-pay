@@ -13,6 +13,7 @@ import logo from '../images/revised.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { load } from '@cashfreepayments/cashfree-js';
+import bhima_Boy from '../images/bhima_boy5.png';
 
 
 const cashfree = await load({
@@ -39,7 +40,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [tokenUrl, setTokenUrl] = useState("");
-  const navigate = useNavigate();
+  const [hoverButton, setHoverButton] = useState(false);
+  const [hoverLink, setHoverLink] = useState(false);
+  const [hoverEmail, setHoverEmail] = useState(false);
 
 
   const resetMobileAndMembershipNumbers = () => {
@@ -256,7 +259,7 @@ function App() {
         MobileNo: mobileNumber,
         Details: [
           {
-            Name:customerInfo[0].Name,
+            Name: customerInfo[0].Name,
             MembershipNo: membershipNumber,
             BranchCode: customerInfo[0].BranchCode,
             SchemeCode: customerInfo[0].SchemeCode,
@@ -267,7 +270,7 @@ function App() {
             Rate: 0,
             GoldWt: 0,
             noOfInst: 1,
-            GoldRate:0
+            GoldRate: 0
           },
         ],
       };
@@ -410,10 +413,11 @@ function App() {
     }
   }, [cashfreeOptions]);
 
+
   return (
     // <div className="background" style={sectionStyle}>
 
-    <div className="App">
+    <div className="App" >
       <div className="header">
         <div className='logo logoimg'>
           <a href='https://bhimagold.com'>
@@ -421,118 +425,285 @@ function App() {
           </a>
         </div>
       </div>
-      <h4 >Quick Pay</h4>
-      <br />
-      <div className="container">
+      <h1 style={{
+        fontSize: "1.875rem", // 3xl
+        fontFamily: "serif",
+        textAlign: "center",
+        color: "#b8860b",
+      }}>Quick Pay</h1>
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingInline:10}}>
+        {/* Top Column */}
+        <div
+          style={{
+            backgroundColor: "rgba(255,255,255,0.9)",
+            padding: "1rem",
+            borderRadius: "1rem",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+            border: "1px solid #d4af37",
+            margin: "1rem",
+            width: "100%",
+            maxWidth: "500px",
+          }}
+        >
+          {/* Card border/logo placeholder */}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
 
-        <div className='row'>
-          <div className='col-md-6'>
-            <div className="profile-card">
-              <div className="card-border">
-                {/* <img src={logo} alt="Bhima Boy Logo" className="small-logo img-fluid" /> */}
-              </div>
 
-              <div className="display">
-                <input
-                  type="text"
-                  placeholder="Enter Your Mobile No"
-                  onKeyPress={(e) => {
-                    const onlyDigits = /^\d+$/;
-                    if (!onlyDigits.test(e.key)) {
-                      e.preventDefault();
-                    }
-                  }}
-                  maxLength={10}
-                  value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value)}
-                  disabled={dataVerified}
-                  onFocus={handleInputFocus}
+            }}
+          >
+            <img src={bhima_Boy} alt="Bhima Boy Logo" style={{ maxWidth: "100px" }} />
+          </div>
 
-                />
-                <input
-                  type="text"
-                  placeholder="Enter Your Membership No"
-                  onKeyPress={(e) => {
-                    const onlyDigitsAndLetters = /^[0-9a-zA-Z]+$/;
-                    const inputValue = e.target.value + e.key;
+          {/* Input Fields */}
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <input
+              type="text"
+              placeholder="Enter Your Mobile No"
+              onKeyPress={(e) => {
+                const onlyDigits = /^\d+$/;
+                if (!onlyDigits.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+              maxLength={10}
+              value={mobileNumber}
+              onChange={(e) => setMobileNumber(e.target.value)}
+              disabled={dataVerified}
+              onFocus={handleInputFocus}
+              style={{
+                width: "100%",
+                padding: "0.5rem 1rem",
+                borderRadius: "1rem",
+                border: "1px solid #ccc",
+                outline: "none",
+                transition: "all 0.2s",
+                boxSizing: "border-box",
+              }}
+            />
 
-                    if (!onlyDigitsAndLetters.test(inputValue) || inputValue.length > 15) {
-                      e.preventDefault();
-                    }
-                  }}
-                  value={membershipNumber}
-                  onChange={(e) => {
-                    const newValue = e.target.value.substring(0, 15); // Limit to 15 characters
-                    setMembershipNumber(newValue);
-                  }}
-                  disabled={dataVerified}
-                  onFocus={handleInputFocus} // Clear error message on input focus
-                />
+            <input
+              type="text"
+              placeholder="Enter Your Membership No"
+              onKeyPress={(e) => {
+                const onlyDigitsAndLetters = /^[0-9a-zA-Z]+$/;
+                const inputValue = e.target.value + e.key;
+                if (!onlyDigitsAndLetters.test(inputValue) || inputValue.length > 15) {
+                  e.preventDefault();
+                }
+              }}
+              value={membershipNumber}
+              onChange={(e) => {
+                const newValue = e.target.value.substring(0, 15);
+                setMembershipNumber(newValue);
+              }}
+              disabled={dataVerified}
+              onFocus={handleInputFocus}
+              style={{
+                width: "100%",
+                padding: "0.5rem 1rem",
+                borderRadius: "1rem",
+                border: "1px solid #ccc",
+                outline: "none",
+                transition: "all 0.2s",
+                boxSizing: "border-box",
+              }}
+            />
+          </div>
 
-                <div className="col-sm-8 text-right">
-                  {!dataVerified && ( // Conditionally render the "Forgot MS Number?" link if data is not verified
-                    <a href="#" onClick={() => { togglePopup(); resetMobileAndMembershipNumbers(); }}>
-                      Forgot Membership No?
-                    </a>
-                  )}
-                </div>
-              </div>
-              <div className="col-sm-11 text-center">
-                <button className="btn" style={{ backgroundColor: "brown", color: "whitesmoke" }} disabled={dataVerified} onClick={validateMobileAndMS} role="button">{isLoading ? "Loading..." : "Verify"}</button>
-              </div>
-              {validationError && (
-                <div className="text-danger" >
-                  {validationError}
-                </div>
-              )}
+          {/* Forgot Membership Link */}
+
+            <div style={{ width: "100%", textAlign: "right", marginTop: "0.5rem" }}>
+              <a
+                href="#"
+                onClick={() => {
+                  togglePopup();
+                  resetMobileAndMembershipNumbers();
+                }}
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#b8860b",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => (e.target.style.color = "#a07808")}
+                onMouseLeave={(e) => (e.target.style.color = "#b8860b")}
+              >
+                Forgot Membership No?
+              </a>
             </div>
+
+
+          {/* Verify Button */}
+          <div style={{ width: "100%", textAlign: "center", marginTop: "1rem" }}>
+            <button
+              style={{
+                background: "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
+                color: "whitesmoke",
+                padding: "0.5rem 1.5rem",
+                borderRadius: "1rem",
+                border: "none",
+                cursor: dataVerified ? "not-allowed" : "pointer",
+                boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+                transition: "all 0.2s",
+                width: "100%",
+              }}
+              disabled={dataVerified}
+              onClick={validateMobileAndMS}
+            >
+              {isLoading ? "Loading..." : "Verify"}
+            </button>
           </div>
-          <div className='col-md-6 terms' style={{ marginTop: "2%" }}>
-            {dataVerified ? null : (
-              <>
-                <ol>
-                  <li>Pay Your Installment in one single click</li>
-                  <li>For any queries, please write to support@bhimagold.com or call us on 1800-121-9076 (All days 10 am to 7 pm IST).</li>
-                  <li> The terms & conditions are subject to change any time, without any prior notice.</li>
-                  <li> All disputes are subject to Bangalore jurisdiction only.</li>
-                </ol>
-              </>
-            )}
-          </div>
+
+          {/* Validation Error */}
+          {validationError && (
+            <div style={{ color: "red", marginTop: "0.5rem" }}>{validationError}</div>
+          )}
+        </div>
+        {/* Middle Column (Terms) */}
+        <div>
+          {!dataVerified && (
+            <div style={{
+              marginTop: "2rem",
+              color: "#4a4a4a",
+              fontSize: "0.875rem",
+              textAlign: "center",
+              lineHeight: 1.6,
+              maxWidth: "32rem",
+            }}>
+              <p>1. Pay your installment in one single click.</p>
+              <p>
+                2. For queries, email{" "}
+                <span
+                  style={{
+                    color: hoverEmail ? "#a07808" : "#b8860b",
+                    fontWeight: 500,
+                    textDecoration: hoverEmail ? "underline" : "none",
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={() => setHoverEmail(true)}
+                  onMouseLeave={() => setHoverEmail(false)}
+                  onClick={() => window.location.href = "mailto:support@bhimagold.com"}
+                >
+                  support@bhimagold.com
+                </span>{" "}
+                or call 1800-121-9076 (10 AM – 7 PM IST).
+              </p>
+              <p>3. Terms & conditions may change without notice.</p>
+              <p>4. All disputes are subject to Bangalore jurisdiction only.</p>
+            </div>
+          )
+          }
         </div>
       </div>
 
-      {customerInfo && (
-        <div className="container">
-          {customerInfo.map((customer, index) => (
-            <div className='card' key={index}>
-              <div className="row">
-                <div className="col-md-3">
-                  <p>Subsriber Name: <span>{customer.Name}</span></p>
-                  {/* <p>Maturity date: <span>{customer.MaturityDate}</span></p> */}
-                  <p style={{ fontSize: "15px" }}>Scheme Name: <span>{customer.SchemeName}</span></p>
+      <div style={{ margin: "1rem", width: "100%",paddingInline:10 }}>
+        {customerInfo && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              alignItems: "center",
+            }}
+          >
+            {customerInfo.map((customer, index) => (
+              <div
+                key={index}
+                style={{
+                  width: "100%",
+                  maxWidth: "500px",
+                  background: "linear-gradient(103.45deg, #ab895e -11.68%, rgb(179 133 66) 48.54%, #ab895e 108.76%)",
+                  color: "#fff",
+                  borderRadius: "1rem",
+                  boxShadow: "0 5px 20px rgba(0,0,0,0.2)",
+                  padding: "1.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                {/* Subscriber Info */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem",alignItems: "center" }}>
+                  <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
+                    Subscriber Name:{" "}
+                    <span style={{ fontWeight: "normal" }}>{customer.Name}</span>
+                  </p>
                 </div>
-                <div className="col-md-4 ">
-                  <p>Membership no: <span>{customer.MembershipNo}</span></p>
 
-
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem",alignItems: "center" }}>
+                  <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
+                    Scheme Name:{" "}
+                    <span style={{ fontWeight: "normal" }}>{customer.SchemeName}</span>
+                  </p>
                 </div>
-                <div className="col-md-5">
-                  <p>Installment amount in Rs: <span>{Number(customer.EMIAmount).toLocaleString()}/-</span></p>
+
+                {/* Membership Info */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem",alignItems: "center" }}>
+                  <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
+                    Membership No:{" "}
+                    <span style={{ fontWeight: "normal" }}>{customer.MembershipNo}</span>
+                  </p>
+                </div>
+
+                {/* Payment Info */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem",alignItems: "center" }}>
+                  <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
+                    Installment Amount (Rs):{" "}
+                    <span style={{ fontWeight: "normal" }}>
+                      {Number(customer.EMIAmount).toLocaleString()}/-
+                    </span>
+                  </p>
 
                   {customer.PaymentPending ? (
-                    <button className="btn btn-success" style={{ width: '20%', marginTop: "2px" }} disabled={paymentGatewayOpen} onClick={openPaymentGateway}>Pay</button>
+                    <button
+                      onClick={openPaymentGateway}
+                      disabled={paymentGatewayOpen}
+                      style={{
+                        width: "100%",
+                        background: "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
+                        //backgroundColor: paymentGatewayOpen ? "#a9a9a9" : "#2e7d32",
+                        color: "white",
+                        padding: "0.5rem 1rem",
+                        fontSize: "1rem",
+                        border: "none",
+                        borderRadius: "0.75rem",
+                        cursor: paymentGatewayOpen ? "not-allowed" : "pointer",
+                        transition: "all 0.3s",
+                      }}
+                      onMouseEnter={(e) =>
+                        !paymentGatewayOpen &&
+                        (e.target.style.backgroundColor = "#256628")
+                      }
+                      onMouseLeave={(e) =>
+                        !paymentGatewayOpen &&
+                        (e.target.style.backgroundColor = "#2e7d32")
+                      }
+                    >
+                      Pay &nbsp;{Number(customer.EMIAmount).toLocaleString()}/-
+                    </button>
                   ) : (
-                    <div className="text-danger" style={{ top: "10px", fontSize: "20px" }}>
+                    <div
+                      style={{
+                        color: "#ffcccb",
+                        fontSize: "1rem",
+                        fontWeight: 600,
+                      }}
+                    >
                       No Installment Pending
                     </div>
                   )}
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
+
 
       {apiResponse && (
         <div className="card" style={{ width: "30rem", backgroundColor: "lavender", padding: "40px", right: "2%" }}>
@@ -574,3 +745,4 @@ function App() {
 }
 
 export default App;
+
