@@ -13,7 +13,7 @@ import logo from '../images/revised.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { load } from '@cashfreepayments/cashfree-js';
-import bhima_Boy from '../images/bhima_boy5.png';
+import bhima_Boy from '../images/bhima_logo3.webp'
 
 
 const cashfree = await load({
@@ -417,21 +417,34 @@ function App() {
   return (
     // <div className="background" style={sectionStyle}>
 
-    <div className="App" >
+    <div className="App">
       <div className="header">
-        <div className='logo logoimg'>
-          <a href='https://bhimagold.com'>
-            <img src={logoImage} alt='Logo alt' className='logo img-fluid' />
+        <div className="logo logoimg">
+          <a href="https://bhimagold.com">
+            <img src={logoImage} alt="Logo alt" className="logo img-fluid" />
           </a>
         </div>
       </div>
-      <h1 style={{
-        fontSize: "1.875rem", // 3xl
-        fontFamily: "serif",
-        textAlign: "center",
-        color: "#b8860b",
-      }}>Quick Pay</h1>
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingInline:10}}>
+      <h1
+        style={{
+          fontSize: "1.875rem", // 3xl
+          fontFamily: "serif",
+          textAlign: "center",
+          color: "#b8860b",
+        }}
+      >
+        Quick Pay
+      </h1>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingInline: 10,
+        }}
+      >
         {/* Top Column */}
         <div
           style={{
@@ -452,15 +465,24 @@ function App() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-
-
             }}
           >
-            <img src={bhima_Boy} alt="Bhima Boy Logo" style={{ maxWidth: "100px" }} />
+            <img
+              src={bhima_Boy}
+              alt="Bhima Boy Logo"
+              style={{ maxWidth: "100px" }}
+            />
           </div>
 
           {/* Input Fields */}
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
             <input
               type="text"
               placeholder="Enter Your Mobile No"
@@ -476,13 +498,16 @@ function App() {
               disabled={dataVerified}
               onFocus={handleInputFocus}
               style={{
+                color: "#614119",
                 width: "100%",
                 padding: "0.5rem 1rem",
-                borderRadius: "1rem",
-                border: "1px solid #ccc",
+                borderRadius: "0.7rem",
+                border: "1px solid #d4af37",
                 outline: "none",
                 transition: "all 0.2s",
                 boxSizing: "border-box",
+                background: "transparent",
+                opacity: dataVerified ? 0.7 : 1,
               }}
             />
 
@@ -492,7 +517,10 @@ function App() {
               onKeyPress={(e) => {
                 const onlyDigitsAndLetters = /^[0-9a-zA-Z]+$/;
                 const inputValue = e.target.value + e.key;
-                if (!onlyDigitsAndLetters.test(inputValue) || inputValue.length > 15) {
+                if (
+                  !onlyDigitsAndLetters.test(inputValue) ||
+                  inputValue.length > 15
+                ) {
                   e.preventDefault();
                 }
               }}
@@ -504,53 +532,61 @@ function App() {
               disabled={dataVerified}
               onFocus={handleInputFocus}
               style={{
+                color: "#614119",
                 width: "100%",
                 padding: "0.5rem 1rem",
-                borderRadius: "1rem",
-                border: "1px solid #ccc",
+                borderRadius: "0.7rem",
+                border: "1px solid #d4af37",
                 outline: "none",
                 transition: "all 0.2s",
                 boxSizing: "border-box",
+                background: "transparent",
+                opacity: dataVerified ? 0.7 : 1,
               }}
             />
           </div>
 
           {/* Forgot Membership Link */}
 
-            <div style={{ width: "100%", textAlign: "right", marginTop: "0.5rem" }}>
-              <a
-                href="#"
-                onClick={() => {
-                  togglePopup();
-                  resetMobileAndMembershipNumbers();
-                }}
-                style={{
-                  fontSize: "0.875rem",
-                  color: "#b8860b",
-                  textDecoration: "none",
-                  cursor: "pointer",
-                }}
-                onMouseEnter={(e) => (e.target.style.color = "#a07808")}
-                onMouseLeave={(e) => (e.target.style.color = "#b8860b")}
-              >
-                Forgot Membership No?
-              </a>
-            </div>
-
+          <div
+            style={{ width: "100%", textAlign: "right", marginTop: "0.5rem" }}
+          >
+            <a
+              href="#"
+              onClick={() => {
+                togglePopup();
+                resetMobileAndMembershipNumbers();
+              }}
+              style={{
+                fontSize: "0.875rem",
+                color: "#b8860b",
+                textDecoration: "none",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => (e.target.style.color = "#a07808")}
+              onMouseLeave={(e) => (e.target.style.color = "#b8860b")}
+            >
+              Forgot Membership No?
+            </a>
+          </div>
 
           {/* Verify Button */}
-          <div style={{ width: "100%", textAlign: "center", marginTop: "1rem" }}>
+          <div
+            style={{ width: "100%", textAlign: "center", marginTop: "1rem" }}
+          >
             <button
               style={{
-                background: "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
+                background:
+                  "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
                 color: "whitesmoke",
                 padding: "0.5rem 1.5rem",
-                borderRadius: "1rem",
+                borderRadius: "0.75rem",
                 border: "none",
                 cursor: dataVerified ? "not-allowed" : "pointer",
                 boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
                 transition: "all 0.2s",
                 width: "100%",
+                opacity: dataVerified ? 0.7 : 1,
               }}
               disabled={dataVerified}
               onClick={validateMobileAndMS}
@@ -561,20 +597,24 @@ function App() {
 
           {/* Validation Error */}
           {validationError && (
-            <div style={{ color: "red", marginTop: "0.5rem" }}>{validationError}</div>
+            <div style={{ color: "red", marginTop: "0.5rem" }}>
+              {validationError}
+            </div>
           )}
         </div>
         {/* Middle Column (Terms) */}
         <div>
           {!dataVerified && (
-            <div style={{
-              marginTop: "2rem",
-              color: "#4a4a4a",
-              fontSize: "0.875rem",
-              textAlign: "center",
-              lineHeight: 1.6,
-              maxWidth: "32rem",
-            }}>
+            <div
+              style={{
+                marginTop: "2rem",
+                color: "#4a4a4a",
+                fontSize: "0.875rem",
+                textAlign: "center",
+                lineHeight: 1.6,
+                maxWidth: "32rem",
+              }}
+            >
               <p>1. Pay your installment in one single click.</p>
               <p>
                 2. For queries, email{" "}
@@ -587,7 +627,9 @@ function App() {
                   }}
                   onMouseEnter={() => setHoverEmail(true)}
                   onMouseLeave={() => setHoverEmail(false)}
-                  onClick={() => window.location.href = "mailto:support@bhimagold.com"}
+                  onClick={() =>
+                    (window.location.href = "mailto:support@bhimagold.com")
+                  }
                 >
                   support@bhimagold.com
                 </span>{" "}
@@ -596,12 +638,11 @@ function App() {
               <p>3. Terms & conditions may change without notice.</p>
               <p>4. All disputes are subject to Bangalore jurisdiction only.</p>
             </div>
-          )
-          }
+          )}
         </div>
       </div>
 
-      <div style={{ margin: "1rem", width: "100%",paddingInline:10 }}>
+      <div style={{ margin: "1rem", width: "100%", paddingInline: 10 }}>
         {customerInfo && (
           <div
             style={{
@@ -617,41 +658,76 @@ function App() {
                 style={{
                   width: "100%",
                   maxWidth: "500px",
-                  background: "linear-gradient(103.45deg, #ab895e -11.68%, rgb(179 133 66) 48.54%, #ab895e 108.76%)",
-                  color: "#fff",
+                  backgroundColor: "rgba(255,255,255,0.9)",
+                  color: "#614119",
                   borderRadius: "1rem",
-                  boxShadow: "0 5px 20px rgba(0,0,0,0.2)",
                   padding: "1.5rem",
                   display: "flex",
                   flexDirection: "column",
                   gap: "1rem",
+                  boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+                  border: "1px solid #d4af37",
                 }}
               >
                 {/* Subscriber Info */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem",alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.25rem",
+                    alignItems: "center",
+                  }}
+                >
                   <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
                     Subscriber Name:{" "}
-                    <span style={{ fontWeight: "normal" }}>{customer.Name}</span>
+                    <span style={{ fontWeight: "normal" }}>
+                      {customer.Name}
+                    </span>
                   </p>
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem",alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.25rem",
+                    alignItems: "center",
+                  }}
+                >
                   <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
                     Scheme Name:{" "}
-                    <span style={{ fontWeight: "normal" }}>{customer.SchemeName}</span>
+                    <span style={{ fontWeight: "normal" }}>
+                      {customer.SchemeName}
+                    </span>
                   </p>
                 </div>
 
                 {/* Membership Info */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem",alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.25rem",
+                    alignItems: "center",
+                  }}
+                >
                   <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
                     Membership No:{" "}
-                    <span style={{ fontWeight: "normal" }}>{customer.MembershipNo}</span>
+                    <span style={{ fontWeight: "normal" }}>
+                      {customer.MembershipNo}
+                    </span>
                   </p>
                 </div>
 
                 {/* Payment Info */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem",alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.5rem",
+                    alignItems: "center",
+                  }}
+                >
                   <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
                     Installment Amount (Rs):{" "}
                     <span style={{ fontWeight: "normal" }}>
@@ -665,7 +741,8 @@ function App() {
                       disabled={paymentGatewayOpen}
                       style={{
                         width: "100%",
-                        background: "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
+                        background:
+                          "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
                         //backgroundColor: paymentGatewayOpen ? "#a9a9a9" : "#2e7d32",
                         color: "white",
                         padding: "0.5rem 1rem",
@@ -694,7 +771,7 @@ function App() {
                         fontWeight: 600,
                       }}
                     >
-                      No Installment Pending
+                      No Pending Installment
                     </div>
                   )}
                 </div>
@@ -704,12 +781,26 @@ function App() {
         )}
       </div>
 
-
       {apiResponse && (
-        <div className="card" style={{ width: "30rem", backgroundColor: "lavender", padding: "40px", right: "2%" }}>
-          <div className="card-body" style={{ alignItems: "center", fontSize: "25px" }}>
-
-            <p className="card-text" style={{ alignItems: "center", fontSize: "22px" }} >{apiResponse}</p>
+        <div
+          className="card"
+          style={{
+            width: "30rem",
+            backgroundColor: "lavender",
+            padding: "40px",
+            right: "2%",
+          }}
+        >
+          <div
+            className="card-body"
+            style={{ alignItems: "center", fontSize: "25px" }}
+          >
+            <p
+              className="card-text"
+              style={{ alignItems: "center", fontSize: "22px" }}
+            >
+              {apiResponse}
+            </p>
           </div>
         </div>
       )}
@@ -737,10 +828,8 @@ function App() {
         className="custom-toast"
       />
 
-
       <Popup show={showPopup} onClose={togglePopup} />
     </div>
-
   );
 }
 

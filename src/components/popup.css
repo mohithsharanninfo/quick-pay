@@ -3,7 +3,7 @@
     display: none;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
     position: fixed;
     top: 0;
     left: 0;
@@ -38,7 +38,7 @@
   } 
   
   .error-card {
-    border: 3px solid rgb(204, 18, 18); /* Red border for the error card */
+    border: 2px solid #d4af37;
     padding: 20px;
     margin: -10px;
     text-align: center;
@@ -74,7 +74,7 @@
     right: 5px;
     cursor: pointer;
     font-size: 28px;
-    color: #a00d0d;
+    color: #614119;
     font-weight: bold;
   }
   

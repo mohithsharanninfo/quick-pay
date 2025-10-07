@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logoImage from '../images/bhimaboylogofinal.jpg';
+import cross_img from '../images/red-crossmark-removebg-preview.png'
 
 const Status = () => {
   const location = useLocation();
@@ -108,19 +109,47 @@ const Status = () => {
   // const amount = amountMatch ? amountMatch[1] : null;
 
   return (
-    <div className='App'>
+    <div className="App">
       <div className="header">
-        <div className='logo logoimg'>
-          <a href='https://bhimagold.com'>
-            <img src={logoImage} alt='Logo alt' className='logo img-fluid' />
+        <div className="logo logoimg">
+          <a href="https://bhimagold.com">
+            <img src={logoImage} alt="Logo alt" className="logo img-fluid" />
           </a>
         </div>
       </div>
-      <div className="container-fluid d-flex justify-content-center align-items-center">
-        {apiResponse && (
-          <div className="card" style={{ width: "25rem", backgroundColor: "lavender", padding: "30px", left: "0%", marginTop: "5%" }}>
-            <div className="card-body" style={{ alignItems: "center", fontSize: "25px" }}>
-              <p className="card-text" style={{ alignItems: "center", fontSize: "22px" }}>{apiResponse}</p>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingInline: 10,
+          height:'500px',
+          maxHeight:'500px'
+        }}
+      >
+        {apiResponse ? (
+          <div
+            className="card"
+            style={{
+              width: "25rem",
+              backgroundColor: "lavender",
+              padding: "30px",
+              left: "0%",
+              marginTop: "5%",
+            }}
+          >
+            <div
+              className="card-body"
+              style={{ alignItems: "center", fontSize: "25px" }}
+            >
+              <p
+                className="card-text"
+                style={{ alignItems: "center", fontSize: "22px" }}
+              >
+                {apiResponse}
+              </p>
 
               {showCloseButton && (
                 <button
@@ -134,30 +163,92 @@ const Status = () => {
                     borderRadius: "5px",
                     cursor: "pointer",
                     fontFamily: "sans-serif",
-                    fontSize: "17px"
+                    fontSize: "17px",
                   }}
                   onClick={handleButtonClick}
                 >
                   Make another Payment
                 </button>
-
               )}
             </div>
             <a href="/" target="_blank" rel="noopener noreferrer">
               Go to Bhima Home
             </a>
           </div>
-        )}
-
-        {
-          !apiResponse &&
-          <div>
-            <p style={{ fontSize: "22px", color: "red", marginTop: "20px" }}>
-              Payment not success !
+        ) : (
+          <div
+            style={{
+              backgroundColor: "rgba(255,255,255,0.9)",
+              padding: "1rem",
+              borderRadius: "1rem",
+              boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+              border: "1px solid #d4af37",
+              margin: "1rem",
+              width: "100%",
+              maxWidth: "500px",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={cross_img}
+                alt="Bhima Boy Logo"
+                style={{ maxWidth: "100px" }}
+              />
+            </div>
+            <p
+              style={{
+                fontSize: "22px",
+                color: "#b8860b",
+                textAlign: "center",
+              }}
+            >
+              Whoops!&nbsp;Payment Failed..
             </p>
-            <span onClick={() => navigate('/')} style={{ cursor: "pointer", color: "blue", textDecoration: "underline", marginTop: "10px" }}>Go to Home</span>
+            <p
+              style={{
+                fontSize: "16px",
+                color: "#b8860b",
+                textAlign: "center",
+              }}
+            >
+              Please try again
+            </p>
+
+            <div
+              style={{
+                width: "100%",
+                textAlign: "center",
+                marginBlock: "1rem",
+              }}
+            >
+              <button
+                style={{
+                  background:
+                    "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
+                  color: "whitesmoke",
+                  padding: "0.5rem 1.5rem",
+                  borderRadius: "0.75rem",
+                  border: "none",
+                  cursor: "pointer",
+                  boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+                  transition: "all 0.2s",
+                  width: "100%",
+                  opacity: 1,
+                }}
+                onClick={() => navigate("/")}
+              >
+                Go to home page
+              </button>
+            </div>
           </div>
-        }
+        )}
       </div>
     </div>
   );
