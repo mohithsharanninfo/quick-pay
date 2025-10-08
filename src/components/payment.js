@@ -632,8 +632,9 @@ function App() {
                 >
                   support@bhimagold.com
                 </span>{" "}
-                or call 1800-121-9076 (10 AM – 7 PM IST).
+                or call 1800-121-9076.
               </p>
+              <p> Timmings (10 AM – 7 PM IST).</p>
               <p>3. Terms & conditions may change without notice.</p>
               <p>4. All disputes are subject to Bangalore jurisdiction only.</p>
             </div>
