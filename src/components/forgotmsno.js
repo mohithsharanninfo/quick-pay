@@ -139,6 +139,7 @@ function Popup(props) {
     setMobileError("");
     try {
       const apiUrl = `https://jppapi.bhimagold.com/api_db.js/api/Sendotpforquickpay/${mobileNumber}`;
+      //const apiUrl = `https://bgapis.bhimagold.com/api_db.js/api/Sendotp/${mobileNumber}`
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
@@ -356,12 +357,12 @@ function Popup(props) {
           <div className="card-container">
             {otpVerified && msNumbers.length > 0
               ? msNumbers.map((ms, index) => (
-                  <div key={index} className="card msno">
-                    <p>MS Number: {ms.MembershipNo}</p>
-                    <p>Name: {ms.Name}</p>
-                    <p>Start Date: {ms.StartDate}</p>
-                  </div>
-                ))
+                <div key={index} className="card msno">
+                  <p>MS Number: {ms.MembershipNo}</p>
+                  <p>Name: {ms.Name}</p>
+                  <p>Start Date: {ms.StartDate}</p>
+                </div>
+              ))
               : null}
           </div>
         </div>
@@ -369,12 +370,47 @@ function Popup(props) {
 
       {isVerificationPopupOpen && !otpVerified && (
         <div className={`popup ${isVerificationPopupOpen ? "active" : ""}`}>
-          <div className="popup-inner">
+          <div style={{
+            backgroundColor: "rgba(255,255,255,0.9)",
+            padding: "1rem",
+            borderRadius: "1rem",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+            border: "1px solid #d4af37",
+            margin: "1rem",
+            width: "100%",
+            maxWidth: "400px",
+            position: "relative",
+          }}>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={bhima_Boy}
+                alt="Bhima Boy Logo"
+                style={{ maxWidth: "100px", maxHeight: "80px" }}
+              />
+            </div>
             <span className="popup-close" onClick={props.onClose}>
               &times;
             </span>
-            <div className="popup-row">
+            <div >
               <input
+                style={{
+                  color: "#614119",
+                  width: "100%",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "0.7rem",
+                  border: "1px solid #d4af37",
+                  outline: "none",
+                  transition: "all 0.2s",
+                  boxSizing: "border-box",
+                  background: "transparent",
+                }}
                 type="text"
                 id="otp"
                 placeholder="OTP"
@@ -386,24 +422,46 @@ function Popup(props) {
                 }}
                 onKeyPress={handleKeyPress}
               />
+              {otpError && (
+                <div
+                  className="text-danger inside-input"
+                  style={{ top: "-10px" }}
+                >
+                  {otpError}
+                </div>
+              )}
             </div>
-            {otpError && (
-              <div
-                className="text-danger inside-input"
-                style={{ top: "-10px" }}
-              >
-                {otpError}
-              </div>
-            )}
-            <div className="popup-row">
-              <button onClick={verifyOTP} className="submit-button">
+
+            <div className="popup-row" style={{ display: "flex", gap: "10px" }}>
+              <button style={{
+                background:
+                  "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
+                color: "whitesmoke",
+                  padding: "0.2rem ",
+                borderRadius: "0.75rem",
+                border: "none",
+                cursor: "pointer",
+                boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+                transition: "all 0.2s",
+                width: "100%",
+              }} onClick={verifyOTP} >
                 Verify OTP
               </button>
               {isResendOtpDisabled && (
                 <button
                   onClick={sendOTP}
-                  className="resend-otp-button"
-                  style={{ padding: "1px", height: "29px" }}
+                  style={{
+                    background:
+                      "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
+                    color: "whitesmoke",
+                    padding: "0.2rem ",
+                    borderRadius: "0.75rem",
+                    border: "none",
+                    cursor: "pointer",
+                    boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+                    transition: "all 0.2s",
+                    width: "100%",
+                  }}
                 >
                   Resend OTP
                 </button>

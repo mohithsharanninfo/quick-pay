@@ -415,15 +415,13 @@ function App() {
 
 
   return (
-    // <div className="background" style={sectionStyle}>
+
 
     <div className="App">
-      <div className="header">
-        <div className="logo logoimg">
-          <a href="https://bhimagold.com">
-            <img src={logoImage} alt="Logo alt" className="logo img-fluid" />
-          </a>
-        </div>
+      <div className="header-container">
+        <a href="https://bhimagold.com" className="logo-link">
+          <img src={logoImage} alt="Bhimagold Logo" className="logo-img" />
+        </a>
       </div>
       <h1
         style={{
@@ -431,6 +429,7 @@ function App() {
           fontFamily: "serif",
           textAlign: "center",
           color: "#b8860b",
+          paddingTop: "1rem",
         }}
       >
         Quick Pay
