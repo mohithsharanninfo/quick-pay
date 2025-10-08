@@ -192,31 +192,7 @@ p {
 
 
 /* Customize the position of the toast container */
-.Toastify__toast-container {
-  position: fixed;
-  margin-top: 6%;
-  left: 35%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  /* Make sure it's above other elements */
-}
 
-.Toastify__toast-body::before {
-  display: none;
-}
-
-
-/* Mobile styles */
-@media (max-width: 767px) {
-  .Toastify__toast-container {
-    margin-top: -20px;
-    position: fixed;
-
-    z-index: 9999;
-    /* Make sure it's above other elements */
-  }
-
-}
 
 .header-container {
   display: flex;

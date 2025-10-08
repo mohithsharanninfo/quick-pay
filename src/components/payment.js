@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { redirect, useNavigate } from 'react-router-dom';
 import Popup from './forgotmsno';
-import Status from './status';
 import './text.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import logoImage from '../images/bhimaboylogofinal.jpg';
 import useRazorpay from "react-razorpay";
 import PaymentSuccessPopup from '../components/paymentpopup'
-import Background from '../images/Website-01.jpg'
-import logo from '../images/revised.png'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { load } from '@cashfreepayments/cashfree-js';
 import bhima_Boy from '../images/bhima_logo3.webp'
+import { useForm } from 'react-hook-form';
 
 
 const cashfree = await load({
@@ -34,14 +30,10 @@ function App() {
   const [clearData, setClearData] = useState(false);
   const [refreshPage, setRefreshPage] = useState(false);
   const [cashfreeOptions, setCashfreeOptions] = useState(null);
-  const [apiResponse, setApiResponse] = useState('');
   const [accessToken, setAccessToken] = useState('');
   const [paymentGatewayOpen, setPaymentGatewayOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const [tokenUrl, setTokenUrl] = useState("");
-  const [hoverButton, setHoverButton] = useState(false);
-  const [hoverLink, setHoverLink] = useState(false);
   const [hoverEmail, setHoverEmail] = useState(false);
 
 
@@ -107,71 +99,51 @@ function App() {
     // Fetch a new access token before making other API calls
     renewAccessToken();
   }, []);
-  // useEffect(() => {
-  //   console.log('Access token used for other API calls:', accessToken);
-  //   // You can add additional logic here to check if accessToken is not empty and use it for other APIs
-  // }, [accessToken]);
 
-  // mobileno & msno validate api
-  const validateMobileAndMS = async () => {
-    if (!membershipNumber && !mobileNumber) {
-      toast.error('Both Membership Number and Mobile Number are required', { autoClose: 3000 });
-    } else if (!membershipNumber) {
-      toast.error('Membership Number is required', { autoClose: 3000 });
-    } else if (!mobileNumber) {
-      toast.error('Mobile Number is required', { autoClose: 3000 });
-    } else {
-      setValidationError('');
 
-      try {
-        setIsLoading(true);
-        //https://testapproval.bhima.info/api_db.js/api/ThirdPartyPayment/9380577096/018GDK356
-        const apiUrl = `https://suvarnagopura.com/MagentoAPI/api_db.js/api/ThirdPartyPayment/${mobileNumber}/${membershipNumber}`;
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-          },
-        });
+  const onSubmit = async (data) => {
+    try {
+      setIsLoading(true);
+      //https://testapproval.bhima.info/api_db.js/api/ThirdPartyPayment/9380577096/018GDK356
+      const apiUrl = `https://suvarnagopura.com/MagentoAPI/api_db.js/api/ThirdPartyPayment/${data?.mobileNumber}/${data?.membershipNumber}`;
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data && data.length > 0) {
-            // Check if there are pending payments
-            const hasPendingPayments = data.some(customer => customer.PaymentPending);
-            if (!hasPendingPayments) {
-              toast.info('No Installment Payment is Pending for this MembershipNo', {
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeButton: false,
-                position: toast.POSITION.TOP_CENTER,
-                bodyClassName: 'custom-toast',
-                style: {
-                  background: 'lavender',
-                  color: 'black',
-                  fontFamily: 'sans-serif',
-                  fontWeight: 'bold',
-                },
-              });
-            } else {
-              // Check if the MembershipNo matches the Mobile No
-              setCustomerInfo(data);
-              setDataVerified(true);// Set dataVerified to true when data is displayed
-            }
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.length > 0) {
+          // Check if there are pending payments
+          const hasPendingPayments = data.some(customer => customer.PaymentPending);
+          if (!hasPendingPayments) {
+            toast.info('No Pending Installment');
           } else {
-            toast.error('The MembershipNo does not match with the Mobile No', { autoClose: 3000 });
-            setClearFields(true);
+            // Check if the MembershipNo matches the Mobile No
+            setCustomerInfo(data);
+            setDataVerified(true);// Set dataVerified to true when data is displayed
           }
         } else {
-          toast.error('Invalid Membership Number or Mobile Number', { autoClose: 3000 });
+          toast.error('Invalid Details', { autoClose: 3000 });
+          setClearFields(true);
         }
-      } catch (error) {
-        console.error('Error validating mobile and MS:', error);
-      } finally {
-        setIsLoading(false);
+      } else {
+        toast.error('Invalid Membership Number or Mobile Number', { autoClose: 3000 });
       }
+    } catch (error) {
+      console.error('Error validating mobile and MS:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -445,6 +417,7 @@ function App() {
         }}
       >
         {/* Top Column */}
+
         <div
           style={{
             backgroundColor: "rgba(255,255,255,0.9)",
@@ -457,150 +430,154 @@ function App() {
             maxWidth: "500px",
           }}
         >
-          {/* Card border/logo placeholder */}
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <img
-              src={bhima_Boy}
-              alt="Bhima Boy Logo"
-              style={{ maxWidth: "100px" }}
-            />
-          </div>
-
-          {/* Input Fields */}
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              gap: "1rem",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Enter Your Mobile No"
-              onKeyPress={(e) => {
-                const onlyDigits = /^\d+$/;
-                if (!onlyDigits.test(e.key)) {
-                  e.preventDefault();
-                }
-              }}
-              maxLength={10}
-              value={mobileNumber}
-              onChange={(e) => setMobileNumber(e.target.value)}
-              disabled={dataVerified}
-              onFocus={handleInputFocus}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* Card border/logo placeholder */}
+            <div
               style={{
-                color: "#614119",
                 width: "100%",
-                padding: "0.5rem 1rem",
-                borderRadius: "0.7rem",
-                border: "1px solid #d4af37",
-                outline: "none",
-                transition: "all 0.2s",
-                boxSizing: "border-box",
-                background: "transparent",
-                opacity: dataVerified ? 0.7 : 1,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
-
-            <input
-              type="text"
-              placeholder="Enter Your Membership No"
-              onKeyPress={(e) => {
-                const onlyDigitsAndLetters = /^[0-9a-zA-Z]+$/;
-                const inputValue = e.target.value + e.key;
-                if (
-                  !onlyDigitsAndLetters.test(inputValue) ||
-                  inputValue.length > 15
-                ) {
-                  e.preventDefault();
-                }
-              }}
-              value={membershipNumber}
-              onChange={(e) => {
-                const newValue = e.target.value.substring(0, 15);
-                setMembershipNumber(newValue);
-              }}
-              disabled={dataVerified}
-              onFocus={handleInputFocus}
-              style={{
-                color: "#614119",
-                width: "100%",
-                padding: "0.5rem 1rem",
-                borderRadius: "0.7rem",
-                border: "1px solid #d4af37",
-                outline: "none",
-                transition: "all 0.2s",
-                boxSizing: "border-box",
-                background: "transparent",
-                opacity: dataVerified ? 0.7 : 1,
-              }}
-            />
-          </div>
-
-          {/* Forgot Membership Link */}
-
-          <div
-            style={{ width: "100%", textAlign: "right", marginTop: "0.5rem" }}
-          >
-            <a
-              href="#"
-              onClick={() => {
-                togglePopup();
-                resetMobileAndMembershipNumbers();
-              }}
-              style={{
-                fontSize: "0.875rem",
-                color: "#b8860b",
-                textDecoration: "none",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => (e.target.style.color = "#a07808")}
-              onMouseLeave={(e) => (e.target.style.color = "#b8860b")}
             >
-              Forgot Membership No?
-            </a>
-          </div>
-
-          {/* Verify Button */}
-          <div
-            style={{ width: "100%", textAlign: "center", marginTop: "1rem" }}
-          >
-            <button
-              style={{
-                background:
-                  "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
-                color: "whitesmoke",
-                padding: "0.5rem 1.5rem",
-                borderRadius: "0.75rem",
-                border: "none",
-                cursor: dataVerified ? "not-allowed" : "pointer",
-                boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
-                transition: "all 0.2s",
-                width: "100%",
-                opacity: dataVerified ? 0.7 : 1,
-              }}
-              disabled={dataVerified}
-              onClick={validateMobileAndMS}
-            >
-              {isLoading ? "Loading..." : "Verify"}
-            </button>
-          </div>
-
-          {/* Validation Error */}
-          {validationError && (
-            <div style={{ color: "red", marginTop: "0.5rem" }}>
-              {validationError}
+              <img
+                src={bhima_Boy}
+                alt="Bhima Boy Logo"
+                style={{ maxWidth: "100px" }}
+              />
             </div>
-          )}
+
+            {/* Input Fields */}
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+              }}
+            >
+              <div>
+                <input
+                  id="mobileNumber"
+                  type="text"
+                  disabled={dataVerified}
+                  onFocus={handleInputFocus}
+                  placeholder="Enter Your Mobile No"
+                  style={{
+                    color: "#614119",
+                    width: "100%",
+                    padding: "0.5rem 1rem",
+                    borderRadius: "0.7rem",
+                    border: "1px solid #d4af37",
+                    outline: "none",
+                    transition: "all 0.2s",
+                    boxSizing: "border-box",
+                    background: "transparent",
+                    opacity: dataVerified ? 0.7 : 1,
+                  }}
+                  {...register('mobileNumber', {
+                    required: 'Mobile number is required',
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: 'Mobile number must be exactly 10 digits',
+                    },
+                  })}
+                />
+                {errors.mobileNumber && (
+                  <small style={{ color: 'red' }}>{errors.mobileNumber.message}</small>
+                )}
+              </div>
+
+              <div>
+                <input
+                  id="membershipNumber"
+                  type="text"
+                  disabled={dataVerified}
+                  onFocus={handleInputFocus}
+                  placeholder="Enter Your Membership No"
+                  style={{
+                    color: "#614119",
+                    width: "100%",
+                    padding: "0.5rem 1rem",
+                    borderRadius: "0.7rem",
+                    border: "1px solid #d4af37",
+                    outline: "none",
+                    transition: "all 0.2s",
+                    boxSizing: "border-box",
+                    background: "transparent",
+                    opacity: dataVerified ? 0.7 : 1,
+                  }}
+                  {...register('membershipNumber', {
+                    required: 'Membership number is required',
+                  })}
+                />
+                {errors.membershipNumber && (
+                  <small style={{ color: 'red' }}>{errors.membershipNumber.message}</small>
+                )}
+              </div>
+            </div>
+
+            {/* Forgot Membership Link */}
+
+            <div
+              style={{ width: "100%", textAlign: "right", marginTop: "0.5rem" }}
+            >
+              <a
+                href="#"
+                onClick={() => {
+                  togglePopup();
+                  resetMobileAndMembershipNumbers();
+                }}
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#b8860b",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => (e.target.style.color = "#a07808")}
+                onMouseLeave={(e) => (e.target.style.color = "#b8860b")}
+              >
+                Forgot Membership No?
+              </a>
+            </div>
+
+            {/* Verify Button */}
+            <div
+              style={{ width: "100%", textAlign: "center", marginTop: "1rem" }}
+            >
+              <button
+                style={{
+                  background:
+                    "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
+                  color: "whitesmoke",
+                  padding: "0.5rem 1.5rem",
+                  borderRadius: "0.75rem",
+                  border: "none",
+                  cursor: dataVerified ? "not-allowed" : "pointer",
+                  boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+                  transition: "all 0.2s",
+                  width: "100%",
+                  opacity: dataVerified ? 0.7 : 1,
+                }}
+                disabled={dataVerified}
+                type='submit'
+              // onClick={validateMobileAndMS}
+              >
+                {isLoading ? "Loading..." : "Verify"}
+              </button>
+            </div>
+
+            {/* Validation Error */}
+            {validationError && (
+              <div style={{ color: "red", marginTop: "0.5rem" }}>
+                {validationError}
+              </div>
+            )}
+          </form>
         </div>
+
+
+
         {/* Middle Column (Terms) */}
         <div>
           {!dataVerified && (
@@ -781,51 +758,11 @@ function App() {
         )}
       </div>
 
-      {apiResponse && (
-        <div
-          className="card"
-          style={{
-            width: "30rem",
-            backgroundColor: "lavender",
-            padding: "40px",
-            right: "2%",
-          }}
-        >
-          <div
-            className="card-body"
-            style={{ alignItems: "center", fontSize: "25px" }}
-          >
-            <p
-              className="card-text"
-              style={{ alignItems: "center", fontSize: "22px" }}
-            >
-              {apiResponse}
-            </p>
-          </div>
-        </div>
-      )}
+
       <PaymentSuccessPopup
         show={showPaymentSuccessPopup}
         onClose={clearAndClosePopup}
         message={paymentSuccessMessage}
-      />
-      <ToastContainer
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        closeButton={false} // Set closeButton to false
-        pauseOnHover
-        bodyStyle={{
-          background: "lavender",
-          color: "black",
-          fontFamily: "sans-serif",
-          fontWeight: "bold",
-        }}
-        className="custom-toast"
       />
 
       <Popup show={showPopup} onClose={togglePopup} />
