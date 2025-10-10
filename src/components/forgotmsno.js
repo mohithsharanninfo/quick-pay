@@ -313,8 +313,8 @@ function Popup(props) {
             {accountCheck && (
               <div className="error-card ">
                 <div
-                  className="card-body text-danger"
-                  style={{ fontFamily: "calibri", fontSize: "15px" }}
+                  className="card-body "
+                  style={{ fontFamily: "calibri", fontSize: "15px", color: "#614119" }}
                 >
                   {accountCheck}
                   <br />
@@ -354,10 +354,21 @@ function Popup(props) {
             </button>
           </div>
 
-          <div className="card-container">
+          <div>
             {otpVerified && msNumbers.length > 0
               ? msNumbers.map((ms, index) => (
-                <div key={index} className="card msno">
+                <div
+                  key={index}
+                  style={{
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    padding: "1rem",
+                    borderRadius: "1rem",
+                    boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
+                    border: "1px solid #d4af37",
+                    marginTop: "1rem",
+                    width: "100%",
+                    maxWidth: "500px",
+                  }} >
                   <p>MS Number: {ms.MembershipNo}</p>
                   <p>Name: {ms.Name}</p>
                   <p>Start Date: {ms.StartDate}</p>
@@ -437,7 +448,7 @@ function Popup(props) {
                 background:
                   "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
                 color: "whitesmoke",
-                  padding: "0.2rem ",
+                padding: "0.2rem ",
                 borderRadius: "0.75rem",
                 border: "none",
                 cursor: "pointer",

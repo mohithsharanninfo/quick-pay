@@ -127,14 +127,14 @@ function App() {
           // Check if there are pending payments
           const hasPendingPayments = data.some(customer => customer.PaymentPending);
           if (!hasPendingPayments) {
-            toast.info('No Pending Installment');
+            toast.info('No Installments Pending');
           } else {
             // Check if the MembershipNo matches the Mobile No
             setCustomerInfo(data);
             setDataVerified(true);// Set dataVerified to true when data is displayed
           }
         } else {
-          toast.error('Invalid Details', { autoClose: 3000 });
+          toast.error('Account Not Found!', { autoClose: 3000 });
           setClearFields(true);
         }
       } else {
@@ -695,6 +695,24 @@ function App() {
                     </span>
                   </p>
                 </div>
+                {
+                  customer?.SchemeName == 'KUBERA' && 
+                        <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.25rem",
+                    alignItems: "center",
+                  }}
+                >
+                  <p style={{ margin: 0, fontSize: "1rem", fontWeight: 500 }}>
+                    Gold Rate:{" "}
+                    <span style={{ fontWeight: "normal" }}>
+                      {customer?.GoldRate} Rs/Grams
+                    </span>
+                  </p>
+                </div>
+                }
 
                 {/* Payment Info */}
                 <div
