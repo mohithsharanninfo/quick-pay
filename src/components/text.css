@@ -74,13 +74,13 @@ a {
   margin-left: 55%;
 }
 
-button {
+/* button {
   margin-top: 10px;
   color: white;
   cursor: pointer;
   width: 20%;
   border-radius: 40px;
-}
+} */
 
 /* .logo {
   max-width: 270px;
@@ -115,8 +115,6 @@ button {
 .container {
   margin-top: 5px;
   border-radius: 60px;
-
-
 }
 
 
@@ -150,12 +148,12 @@ p {
 
   }
 
-  button {
+  /* button {
     width: 30%;
     margin-left: 0%;
     margin-top: 40px;
 
-  }
+  } */
 
   /* .logo {
     width: 50%;

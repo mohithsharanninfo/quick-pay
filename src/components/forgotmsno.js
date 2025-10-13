@@ -448,14 +448,14 @@ function Popup(props) {
                 background:
                   "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
                 color: "whitesmoke",
-                padding: "0.2rem ",
+                padding: "0.3rem ",
                 borderRadius: "0.75rem",
                 border: "none",
                 cursor: "pointer",
                 boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
                 transition: "all 0.2s",
                 width: "100%",
-              }} onClick={verifyOTP} >
+              }} onClick={verifyOTP}>
                 Verify OTP
               </button>
               {isResendOtpDisabled && (
@@ -465,7 +465,7 @@ function Popup(props) {
                     background:
                       "linear-gradient(103.45deg, rgb(97,65,25) -11.68%, rgb(205,154,80) 48.54%, rgb(97,65,25) 108.76%)",
                     color: "whitesmoke",
-                    padding: "0.2rem ",
+                    padding: "0.3rem ",
                     borderRadius: "0.75rem",
                     border: "none",
                     cursor: "pointer",
