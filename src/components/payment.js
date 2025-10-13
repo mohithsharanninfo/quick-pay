@@ -109,6 +109,8 @@ function App() {
 
   const onSubmit = async (data) => {
     try {
+      setMobileNumber(data?.mobileNumber)
+      setMembershipNumber(data?.membershipNumber)
       setIsLoading(true);
       //https://testapproval.bhima.info/api_db.js/api/ThirdPartyPayment/9380577096/018GDK356
       const apiUrl = `https://suvarnagopura.com/MagentoAPI/api_db.js/api/ThirdPartyPayment/${data?.mobileNumber}/${data?.membershipNumber}`;
