@@ -289,7 +289,7 @@ function App() {
       } else if (paymentInfo.pgtype === 'razorpay') {
         openRazorpayPayment();
       }
-      else if (paymentInfo.pgtype === 'PhonePay') {
+      else if (paymentInfo.pgtype === 'PhonePe') {
         window.PhonePeCheckout.transact({ tokenUrl });
       } else {
         console.error('Invalid pgtype:', paymentInfo.pgtype);
