@@ -356,7 +356,13 @@ function Popup(props) {
                   <p>Start Date: {ms.StartDate}</p>
                 </div>
               ))
-              : null}
+              : <>{otpVerified && <p style={{textAlign:"center"}}>No Details Found &nbsp;<a
+                    href="https://www.bhimagold.com/bhima-my-choice"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Click here to Subscriber for JPP
+                  </a></p>}</>}
           </div>
         </div>
       </div>
