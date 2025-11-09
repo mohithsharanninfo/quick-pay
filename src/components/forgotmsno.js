@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import _debounce from "lodash/debounce";
 import "./popup.css";
 import bhima_Boy from "../images/bhima_boy5.png";
+import { API_FORGOTMSNO, API_SENDOTPFORQUICKPAY, API_VALIDATEOTP, HTTP_API_RENEWACCESSTOKEN, TOKEN } from "../../constant";
 
 function Popup(props) {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -13,7 +14,6 @@ function Popup(props) {
   const [otpError, setOtpError] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [isResendOtpDisabled, setIsResendOtpDisabled] = useState(false);
-  const [otpSent, setOtpSent] = useState(false); // Track whether OTP has been sent
   const [isVerifyOtpPopupOpen, setIsVerifyOtpPopupOpen] = useState(false);
   const [accountCheck, setAccountCheck] = useState("");
 
@@ -85,11 +85,9 @@ function Popup(props) {
 
   const renewAccessToken = async () => {
     try {
-      // Load the existing token from the token.json file
-      const tokenData = require("../token.json");
-      const existingToken = tokenData.token;
 
-      const tokenURl = `http://suvarnagopura.com/MagentoAPI/api_db.js/users/renewAccessToken`;
+      const existingToken = TOKEN
+      const tokenURl = `${HTTP_API_RENEWACCESSTOKEN}/renewAccessToken`;
       const response = await fetch(tokenURl, {
         method: "POST",
         headers: {
@@ -104,14 +102,10 @@ function Popup(props) {
       if (response.ok) {
         const data = await response.json();
         const newToken = data.access_token;
-
         setAccessToken(newToken);
-        // console.log(accessToken);
-
-        // Optionally, you can save the new token to localStorage or any other storage mechanism
         localStorage.setItem("accessToken", newToken);
       } else {
-        //console.error('Failed to renew access token:', response.status);
+        console.error('Failed to renew access token:', response?.status);
       }
     } catch (error) {
       console.error("Error renewing access token:", error);
@@ -138,8 +132,7 @@ function Popup(props) {
 
     setMobileError("");
     try {
-      const apiUrl = `https://jppapi.bhimagold.com/api_db.js/api/Sendotpforquickpay/${mobileNumber}`;
-      //const apiUrl = `https://bgapis.bhimagold.com/api_db.js/api/Sendotp/${mobileNumber}`
+      const apiUrl = `${API_SENDOTPFORQUICKPAY}/Sendotpforquickpay/${mobileNumber}`;
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
@@ -147,7 +140,6 @@ function Popup(props) {
         },
       });
 
-      // Assuming your API response has a property named 'success' and 'message'
       const responseData = await response.json();
       const isSuccess = responseData.success;
 
@@ -160,12 +152,7 @@ function Popup(props) {
           setIsResendOtpDisabled(true);
         }, 60000); // 60,000 milliseconds = 1 minute
       } else {
-        // Handle the case when success is not true
-        // Display the API response message to the customer
         setAccountCheck("No JPP account found for this Mobile No.");
-
-        console.error("Failed to send OTP:", responseData.message);
-        // You can also set a state variable to display the message to the user in the UI
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
@@ -181,14 +168,14 @@ function Popup(props) {
   const verifyOTP = async () => {
     if (otp.trim() === "") {
       setOtpError("OTP is required");
-      setOtp(""); // Clear the field value
+      setOtp(""); 
       return;
     }
     setOtpError("");
 
     try {
       // Verify the OTP
-      const verificationUrl = `https://jppapi.bhimagold.com/api_db.js/api/Validateotp/${mobileNumber}/${otp}`;
+      const verificationUrl = `${API_VALIDATEOTP}/Validateotp/${mobileNumber}/${otp}`;
       const response = await fetch(verificationUrl, {
         method: "GET",
         headers: {
@@ -197,13 +184,11 @@ function Popup(props) {
       });
 
       if (response.ok) {
-        // console.log('OTP verification successful');
         setOtpVerified(true);
         setIsVerificationPopupOpen(false);
 
-        // Proceed with fetching MS numbers
-        // const msNumberUrl = `https://jppapi.bhimagold.com/api_db.js/api/forgetmsno/${mobileNumber}`;
-        const msNumberUrl = `https://testapproval.bhima.info/api_db.js/api/forgetmsno/${mobileNumber}`;
+        const msNumberUrl = `${API_FORGOTMSNO}/forgetmsno/${mobileNumber}`;
+        
         const msNumberResponse = await fetch(msNumberUrl, {
           method: "GET",
           headers: {
@@ -214,19 +199,16 @@ function Popup(props) {
 
         if (msNumberResponse.ok) {
           const res = await msNumberResponse.json();
-          // console.log('MS Numbers fetched successfully:', res);
-
+        
           // Filter and set the MS numbers with PaymentPending as true
           const paymentPendingMsNumbers = res.filter(
             (ms) => ms.PaymentPending === true
           );
-          //console.log('Response:', paymentPendingMsNumbers);
           setMsNumbers(paymentPendingMsNumbers);
         } else {
           // console.log('Failed to fetch MS Numbers');
         }
       } else {
-        // console.log('Invalid OTP');
         setOtpError("Invalid OTP. Please try again.");
         setOtp(""); // Clear the field value
       }

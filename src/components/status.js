@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import logoImage from '../images/bhimaboylogofinal.jpg';
 import cross_img from '../images/red-crossmark-removebg-preview.png'
 import success_img from '../images/success_icon.png'
+import { API_PAYMENTCHECK, HTTP_API_RENEWACCESSTOKEN, SERVERDEFAULTPAGE, TOKEN } from '../../constant';
 
 const Status = () => {
   const location = useLocation();
@@ -10,14 +11,13 @@ const Status = () => {
   const [apiResponse, setApiResponse] = useState([]);
   const [accessToken, setAccessToken] = useState('');
   const [showCloseButton, setShowCloseButton] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const renewAccessToken = async () => {
     try {
-      // Load the existing token from the token.json file
-      const tokenData = require('../token.json');
-      const existingToken = tokenData.token;
-      const tokenURl = `http://suvarnagopura.com/MagentoAPI/api_db.js/users/renewAccessToken`;
+   
+      const existingToken = TOKEN
+      const tokenURl = `${HTTP_API_RENEWACCESSTOKEN}/renewAccessToken`;
       const response = await fetch(tokenURl, {
         method: 'POST',
         headers: {
@@ -52,7 +52,7 @@ const Status = () => {
     const orderId = searchParams.get('order_id');
 
     if (orderId) {
-      const apiUrl = `https://suvarnagopura.com/MagentoAPI/api_db.js/api/Paymentcheck/${orderId}`;
+      const apiUrl = `${API_PAYMENTCHECK}/Paymentcheck/${orderId}`;
       const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
@@ -77,9 +77,7 @@ const Status = () => {
 
     const handlePopstate = () => {
       const isLocalEnvironment = process.env.NODE_ENV === 'development';
-      const localDefaultPage = 'http://localhost:3000'; // Replace with your local default route
-      const serverDefaultPage = 'http://localhost:3000'; // Replace with your server default URL
-      const defaultPage = isLocalEnvironment ? localDefaultPage : serverDefaultPage;
+      const defaultPage = isLocalEnvironment ? SERVERDEFAULTPAGE : SERVERDEFAULTPAGE;
       navigate(defaultPage);
     };
 
@@ -90,13 +88,6 @@ const Status = () => {
     };
   }, [location.search, navigate, accessToken]);
 
-  const handleButtonClick = () => {
-    const isLocalEnvironment = process.env.NODE_ENV === 'development';
-    const localDefaultPage = 'http://localhost:3000'; // Replace with your local default route
-    const serverDefaultPage = 'http://localhost:3000'; // Replace with your server default URL
-    const defaultPage = isLocalEnvironment ? localDefaultPage : serverDefaultPage;
-    window.location.href = defaultPage;
-  };
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';

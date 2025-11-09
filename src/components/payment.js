@@ -5,15 +5,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import logoImage from '../images/bhimaboylogofinal.jpg';
 import useRazorpay from "react-razorpay";
-import PaymentSuccessPopup from '../components/paymentpopup'
 import { toast } from 'react-toastify';
 import { load } from '@cashfreepayments/cashfree-js';
 import bhima_Boy from '../images/bhima_logo3.webp'
 import { useForm } from 'react-hook-form';
+import { API_RENEWACCESSTOKEN, API_THIRDPARTYEMIPAYMENT, API_THIRDPARTYPAYMENT, CASHFREEMODE, TOKEN } from '../../constant';
 
 
 const cashfree = await load({
-  mode: "sandbox" //or production
+  mode: CASHFREEMODE
 });
 
 function App() {
@@ -25,10 +25,6 @@ function App() {
   const [dataVerified, setDataVerified] = useState(false);
   const [paymentInfo, setPaymentInfo] = useState('')
   const [clearFields, setClearFields] = useState(false);
-  const [paymentSuccessMessage, setPaymentSuccessMessage] = useState('');
-  const [showPaymentSuccessPopup, setShowPaymentSuccessPopup] = useState(false);
-  const [clearData, setClearData] = useState(false);
-  const [refreshPage, setRefreshPage] = useState(false);
   const [cashfreeOptions, setCashfreeOptions] = useState(null);
   const [accessToken, setAccessToken] = useState('');
   const [paymentGatewayOpen, setPaymentGatewayOpen] = useState(false);
@@ -43,13 +39,6 @@ function App() {
   };
   const [Razorpay] = useRazorpay();
 
-  useEffect(() => {
-    if (refreshPage) {
-      window.location.reload();
-    }
-  }, [refreshPage]);
-
-
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
@@ -60,16 +49,13 @@ function App() {
 
   const renewAccessToken = async () => {
     try {
-      // Load the existing token from the token.json file
-      const tokenData = require('../token.json');
-      const existingToken = tokenData.token;
-      //const tokenURl = `http://suvarnagopura.com/MagentoAPI/api_db.js/users/renewAccessToken`;
-      const tokenURl = `https://suvarnagopura.com/MagentoAPI/api_db.js/users/renewAccessToken`;
+  
+      const existingToken = TOKEN
+      const tokenURl = `${API_RENEWACCESSTOKEN}/renewAccessToken`;
       const response = await fetch(tokenURl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Include any additional headers if needed
         },
         // Pass the existing token in the request body
         body: JSON.stringify({
@@ -82,7 +68,6 @@ function App() {
         const newToken = data.access_token;
 
         setAccessToken(newToken);
-        console.log(accessToken)
 
         // Optionally, you can save the new token to localStorage or any other storage mechanism
         localStorage.setItem('accessToken', newToken);
@@ -112,8 +97,7 @@ function App() {
       setMobileNumber(data?.mobileNumber)
       setMembershipNumber(data?.membershipNumber)
       setIsLoading(true);
-      //https://testapproval.bhima.info/api_db.js/api/ThirdPartyPayment/9380577096/018GDK356
-      const apiUrl = `https://suvarnagopura.com/MagentoAPI/api_db.js/api/ThirdPartyPayment/${data?.mobileNumber}/${data?.membershipNumber}`;
+      const apiUrl = `${API_THIRDPARTYPAYMENT}/ThirdPartyPayment/${data?.mobileNumber}/${data?.membershipNumber}`;
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {
@@ -161,9 +145,6 @@ function App() {
   // response get from razorpay and validate api 
   const handleRazorpayResponse = async (response, ReferenceNumber) => {
     try {
-      console.log('handler called with response:', response);
-      console.log('ReferenceNumber:', ReferenceNumber);
-
       const currentDate = new Date();
       const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
 
@@ -176,14 +157,10 @@ function App() {
         ProviderDate: formattedDate,
         TxnStatus: "Success",
         Type: 'EMIPayment',
-
       };
 
-      console.log('response:', responseData)
+      const apiUrl = `${API_THIRDPARTYPAYMENTCONFIRMATION}/ThridPartyPaymentConfirmation`;
 
-      const apiUrl = 'https://suvarnagopura.com/MagentoAPI/api_db.js/api/ThridPartyPaymentConfirmation';
-
-      // Send the response data to your API
       const apiResponse = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -196,13 +173,6 @@ function App() {
       if (apiResponse.ok) {
         const apiData = await apiResponse.json();
         console.log('API response:', apiData);
-
-        // Display a message to the customer based on the API response
-        if (apiData && apiData.message) {
-          setPaymentSuccessMessage(apiData.message);
-          setShowPaymentSuccessPopup(true);
-          setClearData(true);
-        }
       } else {
         console.error('Error sending response to API:', apiResponse.status);
       }
@@ -211,22 +181,10 @@ function App() {
     }
   };
 
-  const clearAndClosePopup = () => {
-    setShowPaymentSuccessPopup(false);
-    setPaymentSuccessMessage('');
-    if (clearData) {
-      setMembershipNumber('');
-      setMobileNumber('');
-      setCustomerInfo(null);
-      setClearData(false);
-      setRefreshPage(true)
-    }
-  };
+
   // open payment gateway
   const openPaymentGateway = async () => {
     try {
-      console.log('openPaymentGateway called');
-
       const requestData = {
         PortalUserID: 'thridparty',
         AmountPaid: customerInfo[0].EMIAmount,
@@ -249,7 +207,7 @@ function App() {
         ],
       };
 
-      const apiUrl = 'https://suvarnagopura.com/MagentoAPI/api_db.js/api/ThridPartyEMIPayment';
+      const apiUrl = `${API_THIRDPARTYEMIPAYMENT}/ThridPartyEMIPayment`;
       const paymentInfoResponse = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -282,7 +240,6 @@ function App() {
   // Use useEffect to open the payment gateway after paymentInfo is updated
   useEffect(() => {
     if (paymentInfo.success === true) {
-      console.log('razorpay:', paymentInfo);
 
       if (paymentInfo.pgtype === 'Cashfree') {
         openCashfreePayment();
@@ -321,18 +278,16 @@ function App() {
           "contact": mobileNumber
         },
         handler: function (response) {
-          console.log('Payment successful:', response);
           handleRazorpayResponse(response, paymentInfo.ReferenceNumber); // Pass the ReferenceNumber
         },
 
         // Handle payment failure
         modal: {
           ondismiss: function () {
-            setPaymentSuccessMessage('Payment failed!'); // Set the failure message
+            toast.error('Payment Failed!')
           },
         },
       };
-      console.log("sending to Razorpay:", options)
       const rzp1 = new Razorpay(options);
       rzp1.open();
       setPaymentGatewayOpen(true);
@@ -344,14 +299,11 @@ function App() {
 
   const openCashfreePayment = async () => {
     try {
-      console.log('openCashfreePayment called');
-
       setCashfreeOptions({
         paymentSessionId: paymentInfo.payment_session_id,
         returnUrl: "",
       });
       setPaymentGatewayOpen(true);
-      console.log('Payment API response:', cashfreeOptions);
     }
     catch (error) {
       console.error('Error opening Cashfree payment:', error);
@@ -359,15 +311,10 @@ function App() {
   };
 
   useEffect(() => {
-    // This will be triggered after cashfreeOptions is updated
-    console.log('Cashfree options:', cashfreeOptions);
-
-    // Perform other operations that depend on the updated state here
 
     if (cashfreeOptions) {
       try {
         const result = cashfree.checkout(cashfreeOptions);
-        console.log('Cashfree checkout result:', result);
 
         if (result.error) {
           console.error('Error during Cashfree checkout:', result.error.message);
@@ -377,7 +324,6 @@ function App() {
 
         } else {
           console.log('Payment not successful:', result);
-          // Handle unsuccessful payment
         }
       } catch (error) {
         console.error('Error during Cashfree checkout:', error);
@@ -777,13 +723,6 @@ function App() {
           </div>
         )}
       </div>
-
-
-      <PaymentSuccessPopup
-        show={showPaymentSuccessPopup}
-        onClose={clearAndClosePopup}
-        message={paymentSuccessMessage}
-      />
 
       <Popup show={showPopup} onClose={togglePopup} />
     </div>

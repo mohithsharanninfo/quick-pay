@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import { Routes, Route, Link } from 'react-router-dom';
+import React from "react";
+import { Routes, Route } from 'react-router-dom';
 import Status from '../src/components/status';
 import Payment from '../src/components/payment';
-import Mob from '../src/components/mobname'
 import { ToastContainer } from "react-toastify";
 
 function App() {
