@@ -132,7 +132,7 @@ function Popup(props) {
 
     setMobileError("");
     try {
-      const apiUrl = `${API_SENDOTPFORQUICKPAY}/Sendotpforquickpay/${mobileNumber}`;
+      const apiUrl = `${API_SENDOTPFORQUICKPAY}/${mobileNumber}`;
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
