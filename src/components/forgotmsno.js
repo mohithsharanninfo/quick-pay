@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import _debounce from "lodash/debounce";
 import "./popup.css";
 import bhima_Boy from "../images/bhima_boy5.png";
-import { API_FORGOTMSNO, API_SENDOTPFORQUICKPAY, API_VALIDATEOTP, HTTP_API_RENEWACCESSTOKEN, TOKEN } from "../../constant";
+import { API_FORGOTMSNO, API_SENDOTPFORQUICKPAY, API_VALIDATEOTP, HTTP_API_RENEWACCESSTOKEN, TOKEN } from "../constant";
 
 function Popup(props) {
   const [mobileNumber, setMobileNumber] = useState("");

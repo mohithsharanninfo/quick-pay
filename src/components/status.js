@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import logoImage from '../images/bhimaboylogofinal.jpg';
 import cross_img from '../images/red-crossmark-removebg-preview.png'
 import success_img from '../images/success_icon.png'
-import { API_PAYMENTCHECK, HTTP_API_RENEWACCESSTOKEN, SERVERDEFAULTPAGE, TOKEN } from '../../constant';
+import { API_PAYMENTCHECK, HTTP_API_RENEWACCESSTOKEN, SERVERDEFAULTPAGE, TOKEN } from '../constant';
 
 const Status = () => {
   const location = useLocation();
