@@ -443,6 +443,7 @@ function App() {
                   disabled={dataVerified}
                   onFocus={handleInputFocus}
                   placeholder="Enter Your Membership No"
+                   className="membership-input"
                   style={{
                     color: "#614119",
                     width: "100%",
@@ -454,6 +455,7 @@ function App() {
                     boxSizing: "border-box",
                     background: "transparent",
                     opacity: dataVerified ? 0.7 : 1,
+                   textTransform: "uppercase"
                   }}
                   {...register('membershipNumber', {
                     required: 'Membership number is required',

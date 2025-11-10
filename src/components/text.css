@@ -222,3 +222,7 @@ p {
     max-width: 110px; /* mobile */
   }
 }
+
+.membership-input::placeholder {
+  text-transform: none; /* keep placeholder lowercase if desired */
+}
