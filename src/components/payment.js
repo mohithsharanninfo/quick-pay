@@ -579,7 +579,7 @@ function App() {
               alignItems: "center",
             }}
           >
-            {customerInfo.map((customer, index) => (
+            {customerInfo?.map((customer, index) => (
               <div
                 key={index}
                 style={{
@@ -680,7 +680,7 @@ function App() {
                     </span>
                   </p>
 
-                  {customer.PaymentPending ? (
+                  {customer?.PaymentPending ? (
                     <button
                       onClick={openPaymentGateway}
                       disabled={paymentGatewayOpen}
@@ -706,7 +706,7 @@ function App() {
                         (e.target.style.backgroundColor = "#2e7d32")
                       }
                     >
-                      Pay &nbsp;{Number(customer.EMIAmount).toLocaleString()}/-
+                      Pay &nbsp;{Number(customer?.EMIAmount).toLocaleString()}/-
                     </button>
                   ) : (
                     <div
