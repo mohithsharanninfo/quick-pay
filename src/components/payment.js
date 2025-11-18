@@ -7,7 +7,7 @@ import logoImage from '../images/bhimaboylogofinal.jpg';
 import useRazorpay from "react-razorpay";
 import { toast } from 'react-toastify';
 import { load } from '@cashfreepayments/cashfree-js';
-import bhima_Boy from '../images/bhima_logo3.webp'
+import bhima_Boy from '../images/bhima_logo3.jpg'
 import { useForm } from 'react-hook-form';
 import { API_RENEWACCESSTOKEN, API_THIRDPARTYEMIPAYMENT, API_THIRDPARTYPAYMENT, API_THIRDPARTYPAYMENTCONFIRMATION, CASHFREEMODE, TOKEN } from '../constant';
 
@@ -199,7 +199,7 @@ function App() {
             ChitMembershipNo: customerInfo[0].ChitMembershipNo,
             NoOfInst: 1,
             InstallmentAmt: customerInfo[0].EMIAmount,
-            Rate: 0,
+            Rate: customerInfo[0].GoldRate || 0,
             GoldWt: 0,
             noOfInst: 1,
             GoldRate: 0
