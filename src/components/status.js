@@ -225,7 +225,7 @@ const Status = () => {
                   </span>
                 </p>
               </div>
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -239,7 +239,7 @@ const Status = () => {
                     {apiResponse?.Status}
                   </span>
                 </p>
-              </div>
+              </div> */}
               <div
                 style={{
                   display: "flex",
